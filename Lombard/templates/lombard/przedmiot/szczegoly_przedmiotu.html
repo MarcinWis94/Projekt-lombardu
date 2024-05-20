@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ przedmiot.nazwa }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        /* Dodatkowy styl dla szczegółów przedmiotu */
+        .przedmiot-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .przedmiot-container img {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+
+        .przedmiot-container h2 {
+            margin-bottom: 10px;
+        }
+
+        .przedmiot-container p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .przedmiot-container button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .przedmiot-container a {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="przedmiot-container">
+        <h2>{{ przedmiot.nazwa }}</h2>
+        <img src="{{ przedmiot.zdjecie }}" alt="{{ przedmiot.nazwa }} zdjęcie">
+        <p><strong>Cena:</strong> {{ przedmiot.cena }} PLN</p>
+        <p><strong>Opis:</strong> {{ przedmiot.opis }}</p>
+        <p><strong>Ilość:</strong> {{ przedmiot.ilosc }}</p>
+        
+        <form method="post" action="{% url 'dodaj_do_koszyka' przedmiot.id_przedmiotu %}">
+            {% csrf_token %}
+            <button type="submit">Dodaj do koszyka</button>
+        </form>
+        <p><a href="{% url 'koszykZakupow' %}">Koszyk</a></p>
+        <p><a href="{% url 'pokazWszystkieKlientowi' %}">Powrót do listy produktów</a></p>
+    </div>
+</body>
+</html>

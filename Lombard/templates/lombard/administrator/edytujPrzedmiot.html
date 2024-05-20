@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytuj przedmiot</title>
+</head>
+<body>
+    <h2>Edytuj przedmiot</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="nazwa">Nazwa:</label>
+            <input type="text" id="nazwa" name="nazwa" value="{{ przedmiot.nazwa }}" required>
+        </div>
+        <div>
+            <label for="kategoria_id">Kategoria:</label>
+            <select id="kategoria_id" name="kategoria_id" >
+			    <option value="Wszystkie" {% if przedmiot.kategoria_id == "Wszystkie" %}selected{% endif %}>Wszystkie</option>
+                <option value="Elektronika" {% if przedmiot.kategoria_id == "Elektronika" %}selected{% endif %}>Elektronika</option>
+                <option value="Dom i Ogród" {% if przedmiot.kategoria_id == "Dom i Ogród" %}selected{% endif %}>Dom i Ogród</option>
+                <option value="Sport" {% if przedmiot.kategoria_id == "Sport" %}selected{% endif %}>Sport</option>
+                <option value="Motoryzacja" {% if przedmiot.kategoria_id == "Motoryzacja" %}selected{% endif %}>Motoryzacja</option>
+                <option value="Biżuteria" {% if przedmiot.kategoria_id == "Biżuteria" %}selected{% endif %}>Biżuteria</option>
+            </select>
+        </div>
+        <div>
+            <label for="stan">Stan:</label>
+            <select id="stan" name="stan" required>
+                <option value="Używane" {% if przedmiot.stan == "Używane" %}selected{% endif %}>Używane</option>
+                <option value="Nowe" {% if przedmiot.stan == "Nowe" %}selected{% endif %}>Nowe</option>
+            </select>
+        </div>
+        <div>
+            <label for="jak_pozyskany">Jak pozyskany:</label>
+            <input type="text" id="jak_pozyskany" name="jak_pozyskany" value="{{ przedmiot.jak_pozyskany }}" >
+        </div>
+        <div>
+            <label for="cena">Cena:</label>
+            <input type="text" id="cena" name="cena" value="{{ przedmiot.cena }}" required>
+        </div>
+        <div>
+            <label for="ekspertyza">Ekspertyza:</label>
+            <input type="text" id="ekspertyza" name="ekspertyza" value="{{ przedmiot.ekspertyza }}" >
+        </div>
+        <div>
+            <label for="zdjecie">Zdjęcie:</label>
+            <input type="text" id="zdjecie" name="zdjecie" value="{{ przedmiot.zdjecie }}" >
+        </div>
+        <div>
+            <label for="ilosc">Ilość:</label>
+            <input type="number" id="ilosc" name="ilosc" value="{{ przedmiot.ilosc }}" required>
+        </div>
+        <div>
+            <label for="opis">Opis:</label>
+            <input type="text" id="opis" name="opis" value="{{ przedmiot.opis }}" >
+        </div>
+        <div>
+            <button type="submit">Zapisz zmiany</button>
+        </div>
+    </form>
+    <div class='linki'>
+        <p><a href="{% url 'wszystkie' %}">Powrót do listy produktów</a></p>
+    </div>
+</body>
+</html>

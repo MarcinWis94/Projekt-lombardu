@@ -1,0 +1,7 @@
+<h2>Dodaj Pracownika</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Zapisz</button>
+</form>
+<p><a href="{% url 'wszyscy_pracownicy' %}">Powrót</a></p>

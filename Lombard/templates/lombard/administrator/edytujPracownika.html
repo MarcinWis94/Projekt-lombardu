@@ -1,0 +1,84 @@
+<title>Edycja pracownika</title>
+</head>
+<body>
+    <h1>Edycja pracownika</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="imie">Imię:</label><br>
+        <input type="text" id="imie" name="imie" value="{{ pracownik.imie }}"><br>
+        <label for="nazwisko">Nazwisko:</label><br>
+        <input type="text" id="nazwisko" name="nazwisko" value="{{ pracownik.nazwisko }}"><br>
+        <label for="nr_telefonu">Numer telefonu:</label><br>
+        <input type="text" id="nr_telefonu" name="nr_telefonu" value="{{ pracownik.nr_telefonu }}"><br>
+        <label for="funkcja">Funkcja:</label><br>
+        <input type="text" id="funkcja" name="funkcja" value="{{ pracownik.funkcja }}"><br>
+        <!-- Dodajemy pole do zmiany uprawnień -->
+        <label for="uprawnienia">Uprawnienia:</label>
+        <select name="uprawnienia" id="uprawnienia">
+            <option value="pracownik" {% if pracownik in pracownicy %}selected{% endif %}>Pracownik</option>
+            <option value="admin" {% if pracownik not in pracownicy %}selected{% endif %}>Administrator</option>
+        </select><br>
+        <!-- Dodajemy przycisk edycji -->
+        <button type="submit">Zapisz zmiany</button>
+        <!-- Pole ukryte do przesyłania ID pracownika -->
+        <input type="hidden" id="id_pracownika" name="id_pracownika" value="{{ pracownik.id }}">
+    </form>
+</body>
+
+<div class='linki'>
+    <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+    <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+</div>
+
+<script>
+    function edytujPracownika() {
+        var id_pracownika = document.getElementById("id_pracownika").value;
+        var imie = document.getElementById("imie").value;
+        var nazwisko = document.getElementById("nazwisko").value;
+        var nr_telefonu = document.getElementById("nr_telefonu").value;
+        var funkcja = document.getElementById("funkcja").value;
+        var uprawnienia = document.getElementById("uprawnienia").value;
+
+        fetch('/edytujPracownika'+ id_pracownika, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                imie: imie,
+                nazwisko: nazwisko,
+                nr_telefonu: nr_telefonu,
+                funkcja: funkcja,
+                uprawnienia: uprawnienia
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                alert("Zmiany zostały zapisane!");
+                // Przeładuj stronę lub wykonaj inne operacje po zapisaniu zmian
+                window.location.reload();
+            } else {
+                alert("Wystąpił błąd podczas zapisywania zmian!");
+            }
+        })
+        .catch(error => {
+            console.error('Wystąpił błąd:', error);
+        });
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>

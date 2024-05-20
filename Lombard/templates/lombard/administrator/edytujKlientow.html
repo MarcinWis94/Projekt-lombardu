@@ -1,0 +1,23 @@
+<title>Edycja Klienta</title>
+</head>
+<body>
+    <h1>Edycja Klienta</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="imie">Imię:</label><br>
+        <input type="text" id="imie" name="imie" value="{{ klient.imie }}"><br>
+        <label for="nazwisko">Nazwisko:</label><br>
+        <input type="text" id="nazwisko" name="nazwisko" value="{{ klient.nazwisko }}"><br>
+        <label for="nr_telefonu">Numer telefonu:</label><br>
+        <input type="text" id="nr_telefonu" name="nr_telefonu" value="{{ klient.nr_telefonu }}"><br>
+        <!-- Dodajemy przycisk edycji -->
+        <button type="submit">Zapisz zmiany</button>
+        <!-- Pole ukryte do przesyłania ID klienta -->
+        <input type="hidden" id="id_klienta" name="id_klienta" value="{{ klient.id }}">
+    </form>
+
+    <div class='linki'>
+        <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+        <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+    </div>
+</body>

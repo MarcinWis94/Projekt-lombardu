@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wyniki wyszukiwania</title>
+    <style>
+        /* Dodajemy styl dla kontenera wyników wyszukiwania */
+        .wyniki-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Styl dla pojedynczego wyniku wyszukiwania */
+        .wynik {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Styl dla nazwy wyniku wyszukiwania */
+        .wynik a {
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        /* Styl dla ceny wyniku wyszukiwania */
+        .wynik p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Styl dla braku wyników wyszukiwania */
+        .brak-wynikow {
+            font-size: 16px;
+            color: #555;
+        }
+		
+        /* Styl dla przycisku dodawania do koszyka */
+        .wynik button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+		
+		
+        /* Styl dla linków na dole strony */
+        .linki {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .linki p {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wyniki-container">
+        <h2>Wyniki wyszukiwania dla "{{ query }}"</h2>
+        {% if results %}
+            {% for result in results %}
+                <div class="wynik">
+                    <img src="{{ result.zdjecie }}" alt="{{ result.nazwa }} zdjęcie">
+                    <h3><a href="{% url 'szczegoly_przedmiotu' result.id_przedmiotu %}">{{ result.nazwa }}</a></h3>
+                    <p>Cena: {{ result.cena }} PLN</p>
+                    <form method="post" action="{% url 'dodaj_do_koszyka' result.id_przedmiotu %}">
+                        {% csrf_token %}
+                        <button type="submit">Dodaj do koszyka</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="brak-wynikow">Brak wyników</p>
+        {% endif %}
+    </div>
+
+    <!-- Linki na dole strony -->
+    <div class="linki">
+        <p><a href="{% url 'koszykZakupow' %}">Koszyk</a></p>
+        <p><a href="{% url 'pokazWszystkieKlientowi' %}">Powrót do listy produktów</a></p>
+        <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+    </div>
+</body>
+</html>

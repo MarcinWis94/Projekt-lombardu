@@ -1,0 +1,11 @@
+połączyć tabelę przedmioty z tabelą kategorie, aby mieć możliwość utworzenia podkategori np Elektronika->Telefony i dawaniu pracownikowi, przy dodawaniu przedmiotu do bazy, możliwość wyboru kategorii lub podkategorii wybierając ją z listy
+
+Stworzenie systemu i podglądu zastawów dla administratora i klienta
+
+Produkt dodany do koszyka powinien zmiejszać swoją ilość na stanie o dodaną do koszyka ilość
+Przedmioty z przedawnionych umów zastawu powinny z dniem końca przechodzić z przedmiotów w zastawie do przedmiotów na sprzedaż, ale najpierw powinny na 1 dzień trafić do "czyśćca", aby pracownik mógł uzupełnić informacje o nich przed wystawieniem ich na stronę, pracownik powinien mieć wgląd do tego czyśćca.
+
+
+Możliwość wysyłania zapytania w formularzu kontaktowym, w którym opisujemy produkt który chcemy sprzedać/zastawić, dodajemy do niego opis, zdjęcia i cenę jaką chcemy za niego dostać. Pracownik powinien mieć możliwość wstępnej oceny, czy klient może oczekiwać ceny jaką chciałby uzyskać za przedmiot. Dzięki temu nie będzie musiał przychodzić do punktu osobiście.
+
+Ujednolicic styl css

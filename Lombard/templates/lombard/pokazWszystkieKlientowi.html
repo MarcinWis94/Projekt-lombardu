@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista przedmiotów</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <style>
+        /* Dodajemy styl dla kontenera przedmiotów */
+        .przedmioty-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        /* Styl dla pojedynczego przedmiotu */
+        .przedmiot {
+            width: 200px;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* Styl dla obrazka przedmiotu */
+        .przedmiot img {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        /* Styl dla nazwy przedmiotu */
+        .przedmiot h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        /* Styl dla ceny przedmiotu */
+        .przedmiot p {
+            margin: 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Styl dla przycisku dodawania do koszyka */
+        .przedmiot button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Styl dla linków na dole strony */
+        .linki {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .linki p {
+            margin: 10px;
+        }
+
+        /* Styl dla formularza wyboru kategorii */
+        .kategoria-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .kategoria-form label {
+            margin-right: 10px;
+        }
+
+        .kategoria-form button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Lista produktów</h2>
+
+    <!-- Formularz wyboru kategorii -->
+    <form class="kategoria-form" method="get" action="{% url 'produkty_wybrana_kategoria' %}">
+        <label for="kategoria_id">Wybierz kategorię:</label>
+        <select name="kategoria_id" id="kategoria_id">
+            <option value="">Wszystkie</option>
+            <option value="Elektronika">Elektronika</option>
+            <option value="Dom i Ogród">Dom i Ogród</option>
+            <option value="Sport">Sport</option>
+            <option value="Motoryzacja">Motoryzacja</option>
+            <option value="Biżuteria">Biżuteria</option>
+        </select>
+        <button type="submit">Wyświetl produkty</button>
+    </form>
+
+    <div class="przedmioty-container">
+        {% for przedmiot in przedmioty %}
+            <div class="przedmiot">
+                <img src="{{ przedmiot.zdjecie }}" alt="{{ przedmiot.nazwa }} zdjęcie">
+                <h3><a href="{% url 'szczegoly_przedmiotu' przedmiot.id_przedmiotu %}">{{ przedmiot.nazwa }}</a></h3>
+                <p>Cena: {{ przedmiot.cena }} PLN</p>
+                <form method="post" action="{% url 'dodaj_do_koszyka' przedmiot.id_przedmiotu %}">
+                    {% csrf_token %}
+                    <button type="submit">Dodaj do koszyka</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Linki na dole strony -->
+    <div class="linki">
+        <p><a href="{% url 'koszykZakupow' %}">Koszyk</a></p>
+        <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+    </div>
+</body>
+</html>

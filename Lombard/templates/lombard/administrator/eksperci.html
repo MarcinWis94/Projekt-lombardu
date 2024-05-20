@@ -1,0 +1,10 @@
+    <ul>
+        {% for ekspert in eksperci %}
+            <li>{{ ekspert }}</li>
+        {% endfor %}
+    </ul>
+	
+<div class='linki'>
+<p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+<p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+</div>

@@ -1,0 +1,24 @@
+<title>Klienci</title>
+</head>
+<body>
+    <h1>Wszyscy klienci</h1>
+    <ul>
+        {% for klient in klienci %}
+            <li>
+                <strong>ID:</strong> {{ klient.id_klienta }}<br>
+                <strong>Imię:</strong> {{ klient.imie }}<br>
+                <strong>Nazwisko:</strong> {{ klient.nazwisko }}<br>
+                <strong>Numer telefonu:</strong> {{ klient.nr_telefonu }}<br>
+                <a href="{% url 'edytujKlienta' klient.id_klienta %}">Edytuj</a>
+                <a href="{% url 'usunKlienta' klient.id_klienta %}">Usuń</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class='linki'>
+        <p><a href="{% url 'dodajKlienta' %}">Dodaj klienta</a></p> 
+        <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+        <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<p>Koszyk zakupów dla użytkownika: {{ user.username }}</p>
+<ul>
+    {% for pozycja in pozycje %}
+        <li>
+            <img src="{{ pozycja.przedmiot.zdjecie }}" alt="{{ pozycja.przedmiot.nazwa }} zdjęcie" width=100 height=100></img>
+            <strong>Przedmiot:</strong> <a href="{% url 'szczegoly_przedmiotu' pozycja.przedmiot.id_przedmiotu %}">{{ pozycja.przedmiot.nazwa }}</a> - 
+            <strong>Cena:</strong> {{ pozycja.przedmiot.cena }} PLN - 
+            <strong>Ilość:</strong> {{ pozycja.ilosc }} 
+            <form method="post" action="{% url 'usun_z_koszyka' %}">
+                {% csrf_token %}
+                <input type="hidden" name="pozycja_id" value="{{ pozycja.id }}">
+                <button type="submit">Usuń z koszyka</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% if suma_cen %}
+    <div style="float: center; font-size: 20px;">
+        <p>Łączna wartość koszyka: {{ suma_cen }} PLN</p>
+    </div>
+{% endif %}
+
+<div class='linki'>
+    <p><a href="{% url 'pokazWszystkieKlientowi' %}">Kontynuuj zakupy</a></p> 
+{% if perms.app_name.can_view_admin %}
+    <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+{% endif %}
+    <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+</div>

@@ -1,0 +1,19 @@
+<p>Produkty z kategorii Elektronika</p>
+<ul>
+    {% for przedmiot in przedmioty %}
+        <li>
+            <img src="{{ przedmiot.zdjecie }}" alt="{{ przedmiot.nazwa }} zdjęcie" width=100 height=100></img>
+            <a href="{% url 'szczegoly_przedmiotu' przedmiot.id_przedmiotu %}">{{ przedmiot.nazwa }}</a> - {{ przedmiot.cena }} PLN - {{ przedmiot.ilosc }}
+            <form method="post" action="{% url 'dodaj_do_koszyka' przedmiot.id_przedmiotu %}">
+                {% csrf_token %}
+                <button type="submit">Dodaj do koszyka</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class='linki'>
+    <p><a href="{% url 'koszykZakupow' %}">Koszyk</a></p>
+    <p><a href="{% url 'pokazWszystkieKlientowi' %}">Powrót do listy produktów</a></p>
+    <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+</div>

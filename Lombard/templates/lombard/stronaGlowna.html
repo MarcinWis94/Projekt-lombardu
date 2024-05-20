@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekt aplikacji lombardu</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+	
+<style>
+    .logo-container {
+        text-align: center;
+    }
+
+    .logo-container img {
+        max-width: 300px; /* Maksymalna szerokość */
+        max-height: 500px; /* Maksymalna wysokość */
+    }
+
+    /* Styl dla paska wyszukiwania */
+    .search-bar {
+        text-align: center; /* Wypoziomowanie */
+        margin-top: 40px; /* Odstęp od góry */
+        margin-bottom: 40px; /* Odstęp od dołu */
+        height: 30px; /* Wysokość */
+        width: 500px; /* Szerokość */
+        margin-left: auto; /* Wycentrowanie */
+        margin-right: auto; /* Wycentrowanie */
+    }
+
+    /* Styl dla przycisków logowania, rejestracji i wylogowania */
+    .user-info .button {
+        background-color: #ccc; /* Szary kolor */
+        border: none;
+        color: black; /* Kolor tekstu */
+        padding: 8px 16px; /* Dostosowanie paddingu */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px; /* Dostosowanie rozmiaru czcionki */
+        margin: 2px 2px;
+        cursor: pointer;
+        border-radius: 2px;
+    }
+
+    /* Dodatkowy margines dla przycisków */
+    .user-info .welcome .button + .button {
+        margin-left: 10px;
+    }
+
+    /* Styl dla kontenera linków kategorii */
+    .kategorie {
+        display: flex; /* Układanie w jednym wierszu */
+        justify-content: center; /* Wycentrowanie */
+        margin-bottom: 20px; /* Odstęp od dołu */
+    }
+
+    /* Styl dla poszczególnych linków kategorii */
+    .kategorie p {
+        margin: 0 10px; /* Marginesy między linkami */
+    }
+
+    /* Styl dla głównego nagłówka */
+    h2 {
+        text-align: center; /* Wycentrowanie */
+        margin: 0; /* Usunięcie domyślnego marginesu */
+        font-size: 24px; /* Zwiększenie rozmiaru czcionki */
+    }
+
+
+    .user-info {
+        display: column;
+        align-items: center;
+    }
+
+    .user-info .welcome {
+        margin-left: auto; /* Automatyczny margines z prawej strony */
+        margin-right: 20px; /* Margines z prawej strony */
+        font-size: 14px; /* Zmniejszenie rozmiaru czcionki */
+    }
+
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        margin-right: auto; /* Automatyczny margines z lewej strony */
+    }
+
+    .auth-buttons form {
+        display: inline; /* Zapewnia, że przycisk wylogowania będzie w jednej linii z innymi przyciskami */
+    }
+	
+	.welcome {
+		margin-left: auto; /* Przesunięcie elementu na prawo */
+	
+	}
+</style>
+
+
+
+</head>
+<body>
+        <h2>Strona główna lombardu</h2>
+
+    <div class="user-info">
+	    <h1>Witaj, {{ user.username }}</h1>
+        <div class="auth-buttons">
+            <button class="button" onclick="window.location.href='{% url 'login' %}'">Login</button>
+            <button class="button" onclick="window.location.href='{% url 'register' %}'">Rejestracja</button>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Wyloguj</button>
+            </form>
+		        <div class="welcome">
+            <button class="button" onclick="window.location.href='{% url 'koszykZakupow' %}'">Koszyk</button>
+        </div>	
+        </div>
+		
+
+
+    <!-- Dodajemy kontener dla logo i nadajemy mu klasę .logo-container -->
+    <div class="logo-container">
+        <img src="https://sweetprint.pl/environment/cache/images/0_0_productGfx_f9bc4064b66ceb3b50ef9b161b81d5e6.jpg" alt="Logo">
+    </div>
+
+
+    <form method="GET" action="{% url 'wynikiWyszukiwania' %}" class="search-bar">
+        <input type="text" name="query" placeholder="Szukaj produktu" style="height: 100%; width: 100%;" required>
+        <button type="submit" style="height: 100%;">Szukaj</button>
+    </form>
+
+
+    <div class='kategorie'>
+        <p><a href="{% url 'pokazWszystkieKlientowi' %}">Wszystkie produkty</a></p>
+        <p><a href="{% url 'elektronika' %}">Elektronika</a></p>
+        <p><a href="{% url 'domIOgrod' %}">Dom i Ogród</a></p>
+        <p><a href="{% url 'sport' %}">Sport</a></p>
+        <p><a href="{% url 'motoryzacja' %}">Motoryzacja</a></p>
+        <p><a href="{% url 'bizuteria' %}">Biżuteria</a></p>
+    </div>
+
+{% if perms.app_name.can_view_admin %}
+    <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+    <p><a href="{% url 'wszystkie' %}">Wszystkie produkty dla admina</a></p>
+{% endif %}
+    <p><a href="{% url 'oNas' %}">O projekcie</a></p>
+</body>
+    <footer>
+        <p>Miejsce na stopkę</p>
+    </footer>
+</html>

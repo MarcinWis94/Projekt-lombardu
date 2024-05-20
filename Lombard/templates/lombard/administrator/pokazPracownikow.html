@@ -1,0 +1,22 @@
+<p>Wszyscy pracownicy</p>
+<ul>
+    {% for pracownik in pracownicy %}
+        <li>
+            <strong>ID:</strong> {{ pracownik.id_pracownika }}<br>
+            <strong>Imię:</strong> {{ pracownik.imie }}<br>
+            <strong>Funkcja:</strong> {{ pracownik.funkcja }}<br>
+            <strong>Nazwisko:</strong> {{ pracownik.nazwisko }}<br>
+            <strong>Numer telefonu:</strong> {{ pracownik.nr_telefonu }}<br>
+            <!-- Dodajemy wyświetlanie uprawnień -->
+            <strong>Uprawnienia:</strong> {% if pracownik in pracownicy %}Pracownik{% else %}Klient{% endif %}<br>
+            <a href="{% url 'edytujPracownika' pracownik.id_pracownika %}">Edytuj</a>
+            <a href="{% url 'usunPracownika' pracownik.id_pracownika %}">Usuń</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class='linki'>
+    <p><a href="{% url 'dodajPracownika' %}">Dodaj pracownika</a></p> 
+    <p><a href="{% url 'administrator' %}">Powrót do panelu administratora</a></p>
+    <p><a href="{% url 'stronaGlowna' %}">Powrót do strony głownej</a></p>
+</div>

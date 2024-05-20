@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ przedmiot.nazwa }}</title>
+</head>
+<body>
+    <h2>{{ przedmiot.nazwa }}</h2>
+    <img src="{{ przedmiot.zdjecie }}" alt="{{ przedmiot.nazwa }} zdjęcie" width=300 height=300>
+    <p><strong>Cena:</strong> {{ przedmiot.cena }} PLN</p>
+    <p><strong>Opis:</strong> {{ przedmiot.opis }}</p>
+    <p><strong>Ilość:</strong> {{ przedmiot.ilosc }}</p>
+    
+    <div>
+        <a href="{% url 'edytujPrzedmiot' przedmiot.id_przedmiotu %}">Edytuj</a>
+        <a href="{% url 'usunPrzedmiot' przedmiot.id_przedmiotu %}">Usuń</a>
+    </div>
+    
+    <p><a href="{% url 'pokazWszystkieKlientowi' %}">Powrót do listy produktów</a></p>
+</body>
+</html>
